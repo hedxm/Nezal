@@ -1,10 +1,10 @@
-//import { ChatService } from './chat.service';
+
 
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {HttpClient} from "@angular/common/http";
-import Pusher from 'pusher-js';
+//import Pusher from 'pusher-js';
 
  
 @Component({
@@ -14,30 +14,19 @@ import Pusher from 'pusher-js';
   standalone: true,
   imports: [FormsModule,CommonModule]
 })
-export class AppComponent implements OnInit {
+export class AppComponent{
   
   username = 'username';
   message = '';
   messages: { username: string, message: string }[] = [];
+  response = ''; // Initialize the 'response' variable
+  chatbotName = 'Nezal'; // Initialize the chatbot's name
+  chatbotResponses: string[] = []; // Initialize an empty array
   
   constructor(private http: HttpClient) { }
   
   
-  // Inside your component class
-  ngOnInit(): void {
-    Pusher.logToConsole = true;
 
-    Pusher.logToConsole = true;
-
-    const pusher = new Pusher('25291c0752d6089a660c', {
-      cluster: 'eu'
-    });
-
-    const channel = pusher.subscribe('chat');
-    channel.bind('message', (data: never) => { // Specify the type of 'data'
-      this.messages.push(data);
-    });
-  }
   
 
 
@@ -66,10 +55,11 @@ export class AppComponent implements OnInit {
       username: this.username,
       message: this.message
     }).subscribe((response: any) => {
-      console.log(response);
-  
-      // Clear the message input field after the request
       this.message = '';
+      console.log(response);
+      this.response = response;
+      this.chatbotResponses.push(response);
+      // Clear the message input field after the request
     }, (error: any) => {
       console.error(error);  // Log any errors
     });

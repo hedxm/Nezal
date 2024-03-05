@@ -1,19 +1,37 @@
-<div class="container">
-  <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary">
-    <div class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom">
-      <input type="text" [(ngModel)]="username" />
-    </div>
-    <div class="list-group list-group-flush border-bottom scrollarea">
-      <div class="list-group-item list-group-item-action py-3 lh-tight" *ngFor="let msg of messages">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">{{msg['username']}}</strong>
-        </div>
-        <div class="col-10 mb-1 small">{{msg['message']}}</div>
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+    <svg class="bi me-2" width="40" height="32">
+      <use xlink:href="#bootstrap"></use>
+    </svg>
+    <span class="fs-1">Nezal</span>
+  </a>
+</header>
+
+<div>
+  <!-- Display chat history -->
+  <div class="list-group list-group-flush border-bottom scrollarea">
+    <!-- User messages -->
+    <div class="list-group-item list-group-item-action py-3 lh-tight" *ngFor="let msg of messages">
+      <div class="d-flex w-100 align-items-center justify-content-between">
+        <strong class="mb-1">You</strong>
       </div>
+      <div class="col-10 mb-1 small">{{ msg.message }}</div>
+    </div>
+
+    <!-- Chatbot responses -->
+    <div class="list-group-item list-group-item-action py-3 lh-tight" *ngFor="let botMsg of chatbotResponses">
+      <div class="d-flex w-100 align-items-center justify-content-between">
+        <strong class="mb-1">{{ chatbotName }}</strong>
+      </div>
+      <div class="col-10 mb-1 small">{{ botMsg }}</div>
     </div>
   </div>
-  <form>
-    <input class="form-control" placeholder="Write a message" [(ngModel)]="message" [ngModelOptions]="{standalone: true}" />
-    <button type="button" (click)="submit()">Submit</button>
-  </form>  
+
+  <!-- Chat input form -->
+  <form class="d-flex">
+    <input class="form-control me-2" type="text" placeholder="Write a message" [(ngModel)]="message"
+      [ngModelOptions]="{ standalone: true }" />
+    <button type="button" class="btn btn-primary" (click)="submit()">Send</button>
+  </form>
+
 </div>
